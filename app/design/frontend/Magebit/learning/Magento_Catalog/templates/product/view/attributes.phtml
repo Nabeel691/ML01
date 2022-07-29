@@ -1,0 +1,17 @@
+<?php
+        $materials = array();
+        $description = $block->getProduct()->getDescription();
+        $materialCodes = explode("," , $block->getProduct()->getMaterial());
+        foreach ($materialCodes as $code) {
+            array_push($materials, $block->getProduct()->getResource()->getAttribute('material')->getSource()->getOptionText($code));
+        }
+        $dimensions = strpos($description, 'Dimensions') ? htmlentities(strip_tags(str_replace(":", "", str_replace("Dimensions","",substr($description, stripos($description, "Dimensions")))))) : "0\" 0\" 0\"";
+        $materials = join(",", $materials);
+        $description = explode(".", $description)[0];
+        ?>
+    <ul class="product-info-list">
+        <li> <span>Dimensions: </span><?php echo $dimensions; ?> </li>
+        <li> <span>Material: </span><?php echo $materials; ?> </li>
+    </ul>
+<p> <?php echo $description; ?> </p>
+
